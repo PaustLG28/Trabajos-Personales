@@ -1,9 +1,11 @@
-def guardar_texto(texto, nombre_archivo):
+#Un programa sencillo que guarde un achivo de texto y restaure lo que el usuario haya escrito
+
+def guardar_texto(texto, nombre_archivo): #en esta funcion guarda el texto que el usuario escriba
     with open(nombre_archivo, 'w') as archivo:
         archivo.write(texto)
     print(f'Texto guardado en {nombre_archivo}')
 
-def restaurar_texto(nombre_archivo):
+def restaurar_texto(nombre_archivo): #esta funcion recupera lo que el usuario haya decidido escribir
     try:
         with open(nombre_archivo, 'r') as archivo:
             texto = archivo.read()
