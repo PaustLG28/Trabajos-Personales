@@ -1,3 +1,4 @@
+#Este es un juego del gato donde el jugador humano juega contra una inteligencia artificial (hilos) 
 import os
 import sys
 import random
