@@ -1,0 +1,29 @@
+from prefect import Flow, task, Parameter
+import pandas as pd
+import requests
+
+@task
+def descargar_datos(url): 
+    response = requests.get(url)
+    response.raise_for_status()  # Raise exception for bad status codes
+    return response.json()
+
+@task
+def limpiar_datos(datos): 
+    df = pd.DataFrame(datos)
+    df_clean = df.dropna().drop_duplicates()
+    return df_clean
+
+@task
+def analizar_datos(datos): 
+    summary = datos.describe()
+    return summary
+
+with Flow("flujo_de_trabajo") as flow:
+    url = Parameter("url", default="https://api.ejemplo.com/datos")
+    datos_descargados = descargar_datos(url)
+    datos_limpios = limpiar_datos(datos_descargados)
+    resultado_analisis = analizar_datos(datos_limpios)
+
+# Ejecutar el flujo de trabajo
+flow_state = flow.run(parameters={"url": "https://api.ejemplo.com/datos"})
